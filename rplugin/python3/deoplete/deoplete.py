@@ -20,7 +20,7 @@ from deoplete.util import (bytepos2charpos, charpos2bytepos, error, error_tb,
                            find_rplugins, get_buffer_config, get_custom,
                            get_syn_names, import_plugin, convert2candidates)
 
-
+import json
 class Deoplete(logger.LoggingMixin):
 
     def __init__(self, vim):
@@ -69,9 +69,16 @@ class Deoplete(logger.LoggingMixin):
 
         # error(self._vim, context['input'])
         # error(self._vim, candidates)
+        newlist = sorted(candidates, key=lambda k: k['word']) 
+        for x in newlist:
+            if isinstance(x, dict):
+                x['dup'] = 0
+        # file = open("/tmp/o", "a")
+        # file.write("\n-----------------------------------------------------------------\n")
+        # file.write(json.dumps(newlist, sort_keys=True, indent=4, separators=(',', ': ')))
         self._vim.vars['deoplete#_context'] = {
             'complete_position': complete_position,
-            'candidates': candidates,
+            'candidates': newlist,
             'event': context['event'],
             'input': context['input'],
         }
