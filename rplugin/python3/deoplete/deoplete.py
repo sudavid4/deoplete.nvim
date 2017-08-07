@@ -69,7 +69,7 @@ class Deoplete(logger.LoggingMixin):
 
         # error(self._vim, context['input'])
         # error(self._vim, candidates)
-        newlist = sorted(candidates, key=lambda k: k['word']) 
+        newlist = sorted(candidates, key=lambda k: k['word'].lower()) 
         for x in newlist:
             if isinstance(x, dict):
                 x['dup'] = 0
